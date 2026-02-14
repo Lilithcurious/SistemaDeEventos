@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 
-namespace SistemaDeEventos.Models;
+namespace SistemaDeEventos.DTO;
 
-public partial class Ticket
+public class TicketDTO
 {
     public Guid Id { get; set; }
 
@@ -21,8 +20,4 @@ public partial class Ticket
 
     public string? TicketType { get; set; }
     public string? Accessibility { get; set; }
-
-    public virtual Order? Order { get; set; }
-
-    public virtual User? User { get; set; }
 }

@@ -35,6 +35,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
+appsettings.Development.json
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
@@ -481,3 +482,5 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+Models/Event.cs
+.gitignore

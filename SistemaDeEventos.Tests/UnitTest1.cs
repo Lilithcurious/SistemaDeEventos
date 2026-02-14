@@ -1,3 +1,15 @@
-﻿using SistemaDeEventosEfCore;
-namespace SistemaDeEventosEfCore.Tests;
+﻿namespace SistemaDeEventos.Tests;
 
+public class Tests
+{
+    [SetUp]
+    public void Setup()
+    {
+    }
+
+    [Test]
+    public void Test1()
+    {
+        Assert.Pass();
+    }
+}

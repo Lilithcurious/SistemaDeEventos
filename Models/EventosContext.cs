@@ -51,6 +51,9 @@ public partial class EventosContext : DbContext
             entity.Property(e => e.Value)
                 .HasPrecision(10, 2)
                 .HasColumnName("value");
+            entity.Property(e => e.Accessibility)
+                .HasMaxLength(100)
+                .HasColumnName("accessibility");
 
             entity.HasOne(d => d.Location).WithMany(p => p.Events)
                 .HasForeignKey(d => d.LocationId)
@@ -92,6 +95,7 @@ public partial class EventosContext : DbContext
             entity.Property(e => e.Value)
                 .HasPrecision(10, 2)
                 .HasColumnName("value");
+            
 
             entity.HasOne(d => d.User).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.UserId)
