@@ -1,6 +1,6 @@
-using SistemaDeEventosDTO;
+using SistemaDeEventos.DTOs.Order;
 
-namespace SistemaDeEventos.Services.Interface;
+namespace SistemaDeEventos.Interfaces;
 
     public interface IOrderService
     {
@@ -12,6 +12,6 @@ namespace SistemaDeEventos.Services.Interface;
         Task<List<OrderResponseDTO>> GetOrders();
 
         Task<OrderResponseDTO?> GetOrderById(Guid id);
-    Task CreateOrder(Guid userId, Guid eventId, int quantity);
-}
+    }
+
 

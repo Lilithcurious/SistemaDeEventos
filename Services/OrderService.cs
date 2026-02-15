@@ -1,10 +1,10 @@
 using SistemaDeEventos.Models;
-using SistemaDeEventos.Services.Interface;
-using SistemaDeEventosDTO;
+using SistemaDeEventos.Interfaces;
+using SistemaDeEventos.DTOs.Order;
 
 namespace SistemaDeEventos 
 {
-    public class OrderService
+    public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
 
@@ -36,7 +36,28 @@ namespace SistemaDeEventos
             return new OrderResponseDTO
             {
                 Id = order.Id,
-                UserId = order.UserId.Value
+                UserId = order.UserId.Value,
+                CreatedAt = order.Created ?? DateTime.UtcNow
+            };
+        }
+
+        public async Task<List<OrderResponseDTO>> GetOrders()
+        {
+            // simple stub; would ideally map repository results
+            return new List<OrderResponseDTO>();
+        }
+
+        public async Task<OrderResponseDTO?> GetOrderById(Guid id)
+        {
+            var order = await _orderRepository.GetOrderByIdAsync(id);
+            if (order == null)
+                return null;
+
+            return new OrderResponseDTO
+            {
+                Id = order.Id,
+                UserId = order.UserId ?? Guid.Empty,
+                CreatedAt = order.Created ?? DateTime.UtcNow
             };
         }
     }

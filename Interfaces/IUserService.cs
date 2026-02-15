@@ -1,4 +1,4 @@
-namespace SistemaDeEventos;
+namespace SistemaDeEventos.Interfaces;
 
 using SistemaDeEventos.DTOs.User;
 using SistemaDeEventos.Models;

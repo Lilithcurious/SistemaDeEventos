@@ -1,10 +1,12 @@
 using System.Diagnostics;
 using Microsoft.OpenApi.Models;
 using Npgsql;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using SistemaDeEventos.Models;
 using SistemaDeEventos.Interfaces;
 using SistemaDeEventos.Repositories;
+using SistemaDeEventos;
 using SistemaDeEventos.Services;
 
 [DebuggerDisplay($"{{{nameof(GetDebuggerDisplay)}(),nq}}")]
@@ -59,6 +61,44 @@ internal class Program
         }
 
         app.UseHttpsRedirection();
+
+        // friendly JSON responses for certain status codes
+        app.UseStatusCodePages(async context =>
+        {
+            var response = context.HttpContext.Response;
+            response.ContentType = "application/json";
+            switch (response.StatusCode)
+            {
+                case 400:
+                    await response.WriteAsJsonAsync(new { error = "Dados inválidos" });
+                    break;
+                case 401:
+                    await response.WriteAsJsonAsync(new { error = "Login errado" });
+                    break;
+                case 404:
+                    await response.WriteAsJsonAsync(new { error = "Não encontrado" });
+                    break;
+                case 500:
+                    await response.WriteAsJsonAsync(new { error = "Erro interno" });
+                    break;
+            }
+        });
+
+        // catch unhandled exceptions and return a 500 payload
+        app.UseExceptionHandler(errorApp =>
+        {
+            errorApp.Run(async context =>
+            {
+                context.Response.StatusCode = 500;
+                context.Response.ContentType = "application/json";
+                var feature = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>();
+                if (feature != null)
+                {
+                    await context.Response.WriteAsJsonAsync(new { error = "Erro interno", detail = feature.Error.Message });
+                }
+            });
+        });
+
         app.UseAuthorization();
         app.MapControllers();
 

@@ -1,5 +1,6 @@
 using SistemaDeEventos.DTOs.Rating;
 using SistemaDeEventos.Models;
+using SistemaDeEventos.Interfaces;
 
 namespace SistemaDeEventos;
 

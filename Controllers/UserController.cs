@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SistemaDeEventos.DTOs.User;
-using SistemaDeEventos.Services;
+using SistemaDeEventos.Interfaces;
 using SistemaDeEventos.Models;
 
 namespace SistemaDeEventos.Controllers

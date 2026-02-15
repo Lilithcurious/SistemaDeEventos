@@ -144,6 +144,50 @@ Essa separação facilita manutenção, teste e reuse.
 
 ---
 
+## ✅ Requisitos atendidos
+
+Este projeto foi construído com os objetivos do curso em mente. Abaixo está o mapeamento das funcionalidades exigidas:
+
+- **Modelagem de dados** – há 6 tabelas: `Events`, `Locations`, `Orders`, `Ratings`, `Tickets` e `Users`.
+- **CRUD completo** – implementado para eventos, locais, tickets e usuários. O `OrderController` contém criação e leitura básica, podendo ser estendido.
+- **Rota de relatório** – `GET /api/events/relatorio` gera arquivo CSV. A implementação usa `Include` para **JOIN** com a tabela `Locations` (exibe endereço).
+- **Relacionamento N:N** – tickets funcionam como tabela de associação entre usuários e eventos. A entidade `Ticket` agora contém `EventId`, permitindo muitas‑para‑muitos (user ↔ event) e facilitando filtros através de JOIN.
+
+### Migração adicionada
+
+Após atualizar o modelo `Ticket`, execute os comandos EF Core para criar a migração e aplicar ao banco:
+
+```bash
+# dentro da pasta do projeto
+dotnet ef migrations add AddEventIdToTicket
+dotnet ef database update
+```
+
+Isso irá gerar um arquivo em `Migrations/` com alteração da tabela `tickets` adicionando a coluna `event_id` e atualizar o esquema.
+- **Regra de negócio** – validações em serviços, por exemplo nota de avaliação entre 1‑5 e valor de pedido >0.
+- **Filtro com parâmetro** – tickets filtráveis por `accessibility` via query string; avaliações por `eventId`.
+
+### Tratamento de erros
+
+A API devolve códigos HTTP com payload JSON quando algo dá errado (e não quando o servidor está desligado):
+
+| Código | Situação | Exemplo de resposta |
+|--------|----------|---------------------|
+| 400    | Dados inválidos / mal formatados | `{ "error": "Dados inválidos" }` |
+| 401    | Login errado (sem expor usuário/senha) | `{ "error": "Login errado" }` |
+| 404    | Recurso não encontrado | `{ "error": "Não encontrado" }` |
+| 500    | Erro interno | `{ "error": "Erro interno", "detail": "mensagem..." }` |
+
+> Nota: a mensagem “Error: Couldn't connect to server” no Insomnia indica que o serviço não está em execução; nesse caso o cliente não chega a receber nenhum JSON do nosso código.
+- **Consulta com JOIN** – o relatório de eventos inclui um `Include(e => e.Location)` que traduz para um JOIN no SQL.
+
+## 📝 Observações
+
+- Se quiser demonstrar N:N explícito entre `Events` e `Users`, adicione `EventId` à entidade `Ticket` e regule o mapeamento/DTO.
+- O README já descreve as rotas principais e a arquitetura do sistema.
+
+---
+
 ## ✅ Pronto para uso
 
 Copie este arquivo para o root do repositório como `README.md` e ajuste URLs/strings de conexão conforme seu ambiente. Aproveite o desenvolvimento!

@@ -1,6 +1,6 @@
 using SistemaDeEventos.Models;
 
-namespace SistemaDeEventos;
+namespace SistemaDeEventos.Interfaces;
 
 public interface IRatingRepository
 {

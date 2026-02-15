@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using SistemaDeEventos.Models;
+using SistemaDeEventos.Interfaces;
 
-namespace SistemaDeEventos;
+namespace SistemaDeEventos.Repositories;
 
 public class RatingRepository : IRatingRepository
 {

@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using SistemaDeEventos;
 using SistemaDeEventos.Models;
+using SistemaDeEventos.Interfaces;
+
+namespace SistemaDeEventos.Repositories;
 
 public class UserRepository : IUserRepository
 {

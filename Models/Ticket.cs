@@ -11,6 +11,8 @@ public partial class Ticket
 
     public Guid? UserId { get; set; }
 
+    public Guid? EventId { get; set; }
+
     public int Quantity { get; set; }
 
     public decimal Value { get; set; }
@@ -20,9 +22,11 @@ public partial class Ticket
     public TimeOnly Time { get; set; }
 
     public string? TicketType { get; set; }
-    public string? Accessibility { get; set; }
+    public bool? Accessibility { get; set; }
 
     public virtual Order? Order { get; set; }
 
     public virtual User? User { get; set; }
+
+    public virtual Event? Event { get; set; }
 }

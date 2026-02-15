@@ -54,17 +54,19 @@ public class EventsRepository : IEventRepository
     /// </summary>
     public async Task<string> GetEventsReportCsvAsync()
     {
-        var events = await _context.Events.ToListAsync();
+            // include location to demonstrate JOIN operation
+            var events = await _context.Events
+                .Include(e => e.Location)
+                .ToListAsync();
 
-        var csv = new System.Text.StringBuilder();
-        // Cabeçalho
-        csv.AppendLine("ID,Nome,Valor,Data,Hora,Acessibilidade,LocalizacaoID");
-
-        // Dados
+            var csv = new System.Text.StringBuilder();
+            // Cabeçalho (inclui endereço da localização)
+            csv.AppendLine("ID,Nome,Valor,Data,Hora,Acessibilidade,LocalizacaoID,LocalizacaoEndereco");
         foreach (var evt in events)
         {
             var accessibility = evt.Accessibility.HasValue ? (evt.Accessibility.Value ? "Sim" : "Não") : "N/A";
-            csv.AppendLine($"\"{evt.Id}\",\"{EscapeCsv(evt.NameEvents)}\",{evt.Value:F2},{evt.Date:yyyy-MM-dd},{evt.Time:HH:mm:ss},{accessibility},\"{evt.LocationId}\"");
+            var locationAddress = evt.Location != null ? EscapeCsv(evt.Location.Address) : "";
+            csv.AppendLine($"\"{evt.Id}\",\"{EscapeCsv(evt.NameEvents)}\",{evt.Value:F2},{evt.Date:yyyy-MM-dd},{evt.Time:HH:mm:ss},{accessibility},\"{evt.LocationId}\",\"{locationAddress}\"");
         }
 
         return csv.ToString();

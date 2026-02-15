@@ -41,7 +41,7 @@ public class TicketService : ITicketService
         return tickets.Select(MapToDTO);
     }
 
-    public async Task<IEnumerable<TicketDTO>> GetByAccessibilityAsync(string accessibility)
+    public async Task<IEnumerable<TicketDTO>> GetByAccessibilityAsync(bool? accessibility)
     {
         var tickets = await _repository.GetByAccessibilityAsync(accessibility);
         return tickets.Select(MapToDTO);
@@ -87,6 +87,7 @@ public class TicketService : ITicketService
             Id = ticket.Id,
             OrderId = ticket.OrderId,
             UserId = ticket.UserId,
+            EventId = ticket.EventId,
             Quantity = ticket.Quantity,
             Value = ticket.Value,
             Date = ticket.Date,
@@ -102,6 +103,7 @@ public class TicketService : ITicketService
         {
             OrderId = ticketDTO.OrderId,
             UserId = ticketDTO.UserId,
+            EventId = ticketDTO.EventId,
             Quantity = ticketDTO.Quantity,
             Value = ticketDTO.Value,
             Date = ticketDTO.Date,

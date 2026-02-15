@@ -1,6 +1,6 @@
-using SistemaDeEventos;
 using SistemaDeEventos.DTOs.User;
 using SistemaDeEventos.Models;
+using SistemaDeEventos.Interfaces;
 
 public class UserService : IUserService
 {

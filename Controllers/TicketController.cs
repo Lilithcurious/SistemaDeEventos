@@ -16,9 +16,9 @@ public class TicketController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<TicketDTO>>> Get([FromQuery] string? accessibility = null)
+    public async Task<ActionResult<IEnumerable<TicketDTO>>> Get([FromQuery] bool? accessibility = null)
     {
-        if (!string.IsNullOrEmpty(accessibility))
+        if (accessibility.HasValue)
         {
             var filtered = await _service.GetByAccessibilityAsync(accessibility);
             return Ok(filtered);

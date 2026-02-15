@@ -1,6 +1,6 @@
 using SistemaDeEventos.DTOs.Rating;
 
-namespace SistemaDeEventos;
+namespace SistemaDeEventos.Interfaces;
 
 public interface IRatingService
 {

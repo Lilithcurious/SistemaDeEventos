@@ -2,10 +2,12 @@ using SistemaDeEventos.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using System.Linq;
-using SistemaDeEventosDTO;
-namespace SistemaDeEventos.Repository;
+using SistemaDeEventos.DTOs.Order;
+using SistemaDeEventos.Interfaces;
 
-public class OrderRepository
+namespace SistemaDeEventos.Repositories;
+
+public class OrderRepository : IOrderRepository
 {
     private readonly EventosContext _context;
 
@@ -22,10 +24,21 @@ public class OrderRepository
         var savedOrder = entry.Entity;
         return new OrderResponseDTO
         {
-            OrderId = savedOrder.Id,
+            Id = savedOrder.Id,
             UserId = savedOrder.UserId ?? Guid.Empty,
-            Quantity = savedOrder.Quantity
+            CreatedAt = savedOrder.Created ?? DateTime.UtcNow
         };
+    }
+
+    public async Task AddAsync(Order order)
+    {
+        _context.Orders.Add(order);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<Order?> GetOrderByIdAsync(Guid orderId)
+    {
+        return await _context.Orders.FindAsync(orderId);
     }
 }
 

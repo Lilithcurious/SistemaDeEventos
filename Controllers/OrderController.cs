@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using SistemaDeEventos.Services.Interface;
-using SistemaDeEventosDTO;
+using SistemaDeEventos.Interfaces;
+using SistemaDeEventos.DTOs.Order;
 
 namespace SistemaDeEventos.Controllers
 {
@@ -21,8 +21,8 @@ namespace SistemaDeEventos.Controllers
         {
             var order = await _orderService.CreateOrder(
                 request.UserId,
-                request.TotalAmount, // Use the correct property name from OrderCreateRequestDTO
-                request.Quantity.ToString());
+                request.TotalAmount,
+                request.PaymentType);
 
             return Ok(order);
         }

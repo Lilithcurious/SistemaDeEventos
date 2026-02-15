@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SistemaDeEventos.DTOs.Rating;
-using SistemaDeEventos.Services;
+using SistemaDeEventos.Interfaces;
 
 namespace SistemaDeEventos.Controllers
 {

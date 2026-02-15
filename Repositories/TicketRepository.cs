@@ -34,7 +34,7 @@ public class TicketRepository : ITicketRepository
         return await _context.Tickets.Where(t => t.OrderId == orderId).ToListAsync();
     }
 
-    public async Task<IEnumerable<Ticket>> GetByAccessibilityAsync(string accessibility)
+    public async Task<IEnumerable<Ticket>> GetByAccessibilityAsync(bool? accessibility)
     {
         return await _context.Tickets.Where(t => t.Accessibility == accessibility).ToListAsync();
     }
