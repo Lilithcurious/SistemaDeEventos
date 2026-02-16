@@ -8,7 +8,7 @@ public class UserService : IUserService
 
     public UserService(IUserRepository userRepository)
     {
-        _userRepository = userRepository;
+        _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));
     }
 
     public async Task<UserResponseDTO> CreateUser(string name, string email, string password)
@@ -30,7 +30,15 @@ public class UserService : IUserService
             Email = user.Email
         };
     }
+    public async Task<bool> DeleteUser(Guid id)
+    {
+        var user = await _userRepository.GetUserById(id);
+        if (user == null)
+            return false;
 
+        await _userRepository.DeleteUser(user);
+        return true;
+    }
     public async Task<List<UserResponseDTO>> GetAllUsers()
     {
         var users = await _userRepository.GetAllUsers();
@@ -80,4 +88,5 @@ public class UserService : IUserService
         };
     }
 }
+
 

@@ -2,7 +2,7 @@ using SistemaDeEventos.DTOs.Rating;
 using SistemaDeEventos.Models;
 using SistemaDeEventos.Interfaces;
 
-namespace SistemaDeEventos;
+namespace SistemaDeEventos.Services;
 
 public class RatingService : IRatingService
 {
@@ -14,9 +14,9 @@ public class RatingService : IRatingService
     }
 
     public async Task<RatingResponseDTO> CreateRating(
-        Guid userId, 
-        Guid eventId, 
-        int score, 
+        Guid userId,
+        Guid eventId,
+        int score,
         string comment)
     {
         if (score < 1 || score > 5)
@@ -50,8 +50,9 @@ public class RatingService : IRatingService
             {
                 Id = r.Id,
                 Score = r.Score,
-                Comment = r.Comment
+                Comment = r.Comment ?? string.Empty
             })
             .ToList();
     }
 }
+

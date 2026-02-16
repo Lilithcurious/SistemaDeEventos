@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using SistemaDeEventos.DTOs.Rating;
 using SistemaDeEventos.Interfaces;
+using System.Linq;
+
 
 namespace SistemaDeEventos.Controllers
 {
@@ -18,13 +20,13 @@ namespace SistemaDeEventos.Controllers
        [HttpGet("event/{eventId}")]
         public async Task<ActionResult<List<RatingResponseDTO>>> GetRatingsByEvent(Guid eventId)
         {
-        var ratings = await _ratingService.GetRatingsByEvent(eventId);
+            var ratings = await _ratingService.GetRatingsByEvent(eventId);
 
-        if (ratings == null)
-        return NotFound();
+            if (ratings == null || !ratings.Any())
+            return NotFound();
 
-        return Ok(ratings);
-        }
+            return Ok(ratings);
+    }
 
         [HttpPost]
         public async Task<ActionResult<RatingResponseDTO>> CreateRating(
