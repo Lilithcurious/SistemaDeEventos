@@ -107,7 +107,8 @@ StyleCopReport.xml
 *.pidb
 *.svclog
 *.scc
-
+*obj/
+*bin/
 # Chutzpah Test files
 _Chutzpah*
 
@@ -160,6 +161,7 @@ coverage*.info
 # Visual Studio code coverage results
 *.coverage
 *.coveragexml
+*coveragereport
 
 # NCrunch
 _NCrunch_*

@@ -24,6 +24,11 @@ public class EventsRepository : IEventRepository
         return await _context.Events.ToListAsync();
     }
 
+    public async Task<IEnumerable<Event>> GetByAccessibilityAsync(bool? accessibility)
+    {
+        return await _context.Events.Where(e => e.Accessibility == accessibility).ToListAsync();
+    }
+
     public async Task<Event> AddAsync(Event @event)
     {
         _context.Events.Add(@event);

@@ -16,8 +16,14 @@ public class EventsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<EventDTO>>> Get()
+    public async Task<ActionResult<IEnumerable<EventDTO>>> Get([FromQuery] bool? accessibility = null)
     {
+        if (accessibility.HasValue)
+        {
+            var filtered = await _service.GetByAccessibilityAsync(accessibility);
+            return Ok(filtered);
+        }
+
         var events = await _service.GetAllAsync();
         return Ok(events);
     }
