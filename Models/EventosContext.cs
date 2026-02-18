@@ -105,21 +105,22 @@ public partial class EventosContext : DbContext
 
         modelBuilder.Entity<Rating>(entity =>
         {
-            entity.HasKey(e => new { e.OrderId, e.UserId }).HasName("ratings_pkey");
+            entity.HasKey(e => e.Id).HasName("ratings_pkey");
 
             entity.ToTable("ratings");
 
-            entity.Property(e => e.OrderId).HasColumnName("order_id");
+            entity.Property(e => e.Id)
+                .HasDefaultValueSql("uuid_generate_v4()")
+                .HasColumnName("id");
+            entity.Property(e => e.EventId).HasColumnName("event_id");
             entity.Property(e => e.UserId).HasColumnName("user_id");
+            entity.Property(e => e.Score).HasColumnName("score");
             entity.Property(e => e.Comment)
                 .HasMaxLength(200)
                 .HasColumnName("comment");
-            entity.Property(e => e.Note).HasColumnName("note");
-
-            entity.HasOne(d => d.Order).WithMany(p => p.Ratings)
-                .HasForeignKey(d => d.OrderId)
-                .OnDelete(DeleteBehavior.SetNull)
-                .HasConstraintName("fk_rating_order");
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnName("created_at");
 
             entity.HasOne(d => d.User).WithMany(p => p.Ratings)
                 .HasForeignKey(d => d.UserId)
@@ -138,6 +139,7 @@ public partial class EventosContext : DbContext
                 .HasColumnName("id");
             entity.Property(e => e.Date).HasColumnName("date");
             entity.Property(e => e.OrderId).HasColumnName("order_id");
+            entity.Property(e => e.EventId).HasColumnName("event_id");
             entity.Property(e => e.Quantity).HasColumnName("quantity");
             entity.Property(e => e.TicketType)
                 .HasMaxLength(50)
@@ -157,6 +159,11 @@ public partial class EventosContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("fk_ticket_user");
+
+            entity.HasOne(d => d.Event).WithMany()
+                .HasForeignKey(d => d.EventId)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("fk_ticket_event");
         });
 
         modelBuilder.Entity<User>(entity =>
@@ -174,6 +181,9 @@ public partial class EventosContext : DbContext
             entity.Property(e => e.Email)
                 .HasMaxLength(255)
                 .HasColumnName("email");
+            entity.Property(e => e.Password)
+                .HasMaxLength(255)
+                .HasColumnName("password");
             entity.Property(e => e.IsActive)
                 .HasDefaultValue(true)
                 .HasColumnName("is_active");

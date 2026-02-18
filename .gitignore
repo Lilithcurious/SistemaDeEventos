@@ -107,7 +107,8 @@ StyleCopReport.xml
 *.pidb
 *.svclog
 *.scc
-
+*obj/
+*bin/
 # Chutzpah Test files
 _Chutzpah*
 
@@ -160,6 +161,7 @@ coverage*.info
 # Visual Studio code coverage results
 *.coverage
 *.coveragexml
+*coveragereport
 
 # NCrunch
 _NCrunch_*
@@ -484,3 +486,46 @@ $RECYCLE.BIN/
 *.swp
 Models/Event.cs
 .gitignore
+coveragereport/SistemaDeEventos_AddEventIdToTicket.html
+coveragereport/SistemaDeEventos_AddTicketAccessibility.html
+coveragereport/SistemaDeEventos_Event.html
+coveragereport/SistemaDeEventos_EventDTO.html
+coveragereport/SistemaDeEventos_EventosContext.html
+coveragereport/SistemaDeEventos_EventosContextModelSnapshot.html
+coveragereport/SistemaDeEventos_EventsController.html
+coveragereport/SistemaDeEventos_EventService.html
+coveragereport/SistemaDeEventos_EventsRepository.html
+coveragereport/SistemaDeEventos_Location.html
+coveragereport/SistemaDeEventos_LocationController.html
+coveragereport/SistemaDeEventos_LocationDTO.html
+coveragereport/SistemaDeEventos_LocationRepository.html
+coveragereport/SistemaDeEventos_LocationService.html
+coveragereport/SistemaDeEventos_Order.html
+coveragereport/SistemaDeEventos_OrderController.html
+coveragereport/SistemaDeEventos_OrderCreateRequestDTO.html
+coveragereport/SistemaDeEventos_OrderListResponseDTO.html
+coveragereport/SistemaDeEventos_OrderRepository.html
+coveragereport/SistemaDeEventos_OrderResponseDTO.html
+coveragereport/SistemaDeEventos_OrderService.html
+coveragereport/SistemaDeEventos_PostgresContext.html
+coveragereport/SistemaDeEventos_Program.html
+coveragereport/SistemaDeEventos_Rating.html
+coveragereport/SistemaDeEventos_RatingController.html
+coveragereport/SistemaDeEventos_RatingCreateRequestDTO.html
+coveragereport/SistemaDeEventos_RatingRepository.html
+coveragereport/SistemaDeEventos_RatingResponseDTO.html
+coveragereport/SistemaDeEventos_RatingService.html
+coveragereport/SistemaDeEventos_Ticket.html
+coveragereport/SistemaDeEventos_TicketController.html
+coveragereport/SistemaDeEventos_TicketDTO.html
+coveragereport/SistemaDeEventos_TicketRepository.html
+coveragereport/SistemaDeEventos_TicketService.html
+coveragereport/SistemaDeEventos_UpdateTicketModel.html
+coveragereport/SistemaDeEventos_User.html
+coveragereport/SistemaDeEventos_UserController.html
+coveragereport/SistemaDeEventos_UserCreateRequestDTO.html
+coveragereport/SistemaDeEventos_UserRepository.html
+coveragereport/SistemaDeEventos_UserResponseDTO.html
+coveragereport/SistemaDeEventos_UserService.html
+coveragereport/SistemaDeEventos_UserUpdateRequestDTO.html
+coveragereport/SistemaDeEventos_WeatherForecast.html

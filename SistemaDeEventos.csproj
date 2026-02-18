@@ -12,5 +12,15 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
   </ItemGroup>
+  <ItemGroup>
+    <!-- prevent compiling the nested API project files to avoid duplicate types -->
+    <Compile Remove="SistemaDeEventos.API\**\*.cs" />
+    <None Remove="SistemaDeEventos.API\**\*" />
+    <Content Remove="SistemaDeEventos.API\**\*" />
+    <!-- exclude unit test files from build, they belong to separate test project -->
+    <Compile Remove="SistemaDeEventos.Tests\**\*.cs" />
+    <None Remove="SistemaDeEventos.Tests\**\*" />
+    <Content Remove="SistemaDeEventos.Tests\**\*" />
+  </ItemGroup>
 
 </Project>

@@ -29,6 +29,12 @@ public class EventService : IEventService
         return events.Select(MapToDTO);
     }
 
+    public async Task<IEnumerable<EventDTO>> GetByAccessibilityAsync(bool? accessibility)
+    {
+        var events = await _repository.GetByAccessibilityAsync(accessibility);
+        return events.Select(MapToDTO);
+    }
+
     public async Task<EventDTO> CreateAsync(EventDTO eventDTO)
     {
         var @event = MapToModel(eventDTO);

@@ -20,4 +20,6 @@ public partial class Event
     public Guid LocationId { get; set; }
 
     public virtual Location Location { get; set; } = null!;
+
+    public virtual ICollection<Ticket>? Tickets { get; set; }
 }

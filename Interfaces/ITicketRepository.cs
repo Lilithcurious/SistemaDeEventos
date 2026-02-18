@@ -9,7 +9,7 @@ public interface ITicketRepository
     Task<IEnumerable<Ticket>> GetAllAsync();
     Task<IEnumerable<Ticket>> GetByUserIdAsync(Guid userId);
     Task<IEnumerable<Ticket>> GetByOrderIdAsync(Guid orderId);
-    Task<IEnumerable<Ticket>> GetByAccessibilityAsync(string accessibility);
+    Task<IEnumerable<Ticket>> GetByAccessibilityAsync(bool? accessibility);
     Task<Ticket> AddAsync(Ticket ticket);
     Task<Ticket> UpdateAsync(Ticket ticket);
     Task<bool> DeleteAsync(Guid id);

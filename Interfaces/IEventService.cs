@@ -7,6 +7,7 @@ public interface IEventService
 {
     Task<EventDTO?> GetByIdAsync(Guid id);
     Task<IEnumerable<EventDTO>> GetAllAsync();
+    Task<IEnumerable<EventDTO>> GetByAccessibilityAsync(bool? accessibility);
     Task<EventDTO> CreateAsync(EventDTO eventDTO);
     Task<EventDTO> UpdateAsync(Guid id, EventDTO eventDTO);
     Task<bool> DeleteAsync(Guid id);

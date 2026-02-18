@@ -135,25 +135,42 @@ namespace SistemaDeEventos.Migrations
 
             modelBuilder.Entity("SistemaDeEventos.Models.Rating", b =>
                 {
-                    b.Property<Guid>("OrderId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
-                        .HasColumnName("order_id");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("user_id");
+                        .HasColumnName("id")
+                        .HasDefaultValueSql("uuid_generate_v4()");
 
                     b.Property<string>("Comment")
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)")
                         .HasColumnName("comment");
 
-                    b.Property<int?>("Note")
-                        .HasColumnType("integer")
-                        .HasColumnName("note");
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at")
+                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
-                    b.HasKey("OrderId", "UserId")
+                    b.Property<Guid>("EventId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("event_id");
+
+                    b.Property<Guid?>("OrderId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Score")
+                        .HasColumnType("integer")
+                        .HasColumnName("score");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
                         .HasName("ratings_pkey");
+
+                    b.HasIndex("OrderId");
 
                     b.HasIndex("UserId");
 
@@ -168,12 +185,19 @@ namespace SistemaDeEventos.Migrations
                         .HasColumnName("id")
                         .HasDefaultValueSql("uuid_generate_v4()");
 
-                    b.Property<string>("Accessibility")
-                        .HasColumnType("text");
+                    b.Property<bool?>("Accessibility")
+                        .HasColumnType("boolean");
 
                     b.Property<DateOnly>("Date")
                         .HasColumnType("date")
                         .HasColumnName("date");
+
+                    b.Property<Guid?>("EventId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("event_id");
+
+                    b.Property<Guid?>("EventId1")
+                        .HasColumnType("uuid");
 
                     b.Property<Guid?>("OrderId")
                         .HasColumnType("uuid")
@@ -203,6 +227,10 @@ namespace SistemaDeEventos.Migrations
 
                     b.HasKey("Id")
                         .HasName("tickets_pkey");
+
+                    b.HasIndex("EventId");
+
+                    b.HasIndex("EventId1");
 
                     b.HasIndex("OrderId");
 
@@ -240,6 +268,12 @@ namespace SistemaDeEventos.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)")
                         .HasColumnName("name");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)")
+                        .HasColumnName("password");
 
                     b.Property<string>("Phone")
                         .HasMaxLength(20)
@@ -282,10 +316,7 @@ namespace SistemaDeEventos.Migrations
                 {
                     b.HasOne("SistemaDeEventos.Models.Order", "Order")
                         .WithMany("Ratings")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired()
-                        .HasConstraintName("fk_rating_order");
+                        .HasForeignKey("OrderId");
 
                     b.HasOne("SistemaDeEventos.Models.User", "User")
                         .WithMany("Ratings")
@@ -301,6 +332,16 @@ namespace SistemaDeEventos.Migrations
 
             modelBuilder.Entity("SistemaDeEventos.Models.Ticket", b =>
                 {
+                    b.HasOne("SistemaDeEventos.Models.Event", "Event")
+                        .WithMany()
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_ticket_event");
+
+                    b.HasOne("SistemaDeEventos.Models.Event", null)
+                        .WithMany("Tickets")
+                        .HasForeignKey("EventId1");
+
                     b.HasOne("SistemaDeEventos.Models.Order", "Order")
                         .WithMany("Tickets")
                         .HasForeignKey("OrderId")
@@ -313,9 +354,16 @@ namespace SistemaDeEventos.Migrations
                         .OnDelete(DeleteBehavior.SetNull)
                         .HasConstraintName("fk_ticket_user");
 
+                    b.Navigation("Event");
+
                     b.Navigation("Order");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SistemaDeEventos.Models.Event", b =>
+                {
+                    b.Navigation("Tickets");
                 });
 
             modelBuilder.Entity("SistemaDeEventos.Models.Location", b =>
