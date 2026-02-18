@@ -9,6 +9,6 @@ public interface IUserService
     Task<UserResponseDTO> GetUserById(Guid id);
     Task<UserResponseDTO> UpdateUser(Guid id, string name, string email, string password);
     Task<UserResponseDTO> CreateUser(string name, string email, string password);
+    Task<bool> DeleteUser(Guid id);
 }
-
 

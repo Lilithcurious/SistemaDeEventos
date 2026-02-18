@@ -2,7 +2,7 @@ using SistemaDeEventos.DTOs.Rating;
 using SistemaDeEventos.Models;
 using SistemaDeEventos.Interfaces;
 
-namespace SistemaDeEventos;
+namespace SistemaDeEventos.Services;
 
 public class RatingService : IRatingService
 {
@@ -10,17 +10,27 @@ public class RatingService : IRatingService
 
     public RatingService(IRatingRepository ratingRepository)
     {
-        _ratingRepository = ratingRepository;
+        _ratingRepository = ratingRepository
+            ?? throw new ArgumentNullException(nameof(ratingRepository));
     }
 
     public async Task<RatingResponseDTO> CreateRating(
-        Guid userId, 
-        Guid eventId, 
-        int score, 
+        Guid userId,
+        Guid eventId,
+        int score,
         string comment)
     {
+        if (userId == Guid.Empty)
+            throw new ArgumentException("Invalid user ID");
+
+        if (eventId == Guid.Empty)
+            throw new ArgumentException("Invalid event ID");
+
         if (score < 1 || score > 5)
-            throw new ArgumentException("A nota deve estar entre 1 e 5.");
+            throw new ArgumentException("Score must be between 1 and 5");
+
+        if (string.IsNullOrWhiteSpace(comment))
+            throw new ArgumentException("Comment is required");
 
         var rating = new Rating
         {
@@ -43,14 +53,20 @@ public class RatingService : IRatingService
 
     public async Task<List<RatingResponseDTO>> GetRatingsByEvent(Guid eventId)
     {
+        if (eventId == Guid.Empty)
+            throw new ArgumentException("Invalid event ID");
+
         var ratings = await _ratingRepository.GetRatingsByEventId(eventId);
+
+        if (ratings == null)
+            return new List<RatingResponseDTO>();
 
         return ratings
             .Select(r => new RatingResponseDTO
             {
                 Id = r.Id,
                 Score = r.Score,
-                Comment = r.Comment
+                Comment = r.Comment ?? string.Empty
             })
             .ToList();
     }

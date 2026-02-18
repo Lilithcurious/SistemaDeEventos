@@ -213,49 +213,12 @@ var assemblies = [
   {
     "name": "SistemaDeEventos",
     "classes": [
-      { "name": "Program", "rp": "SistemaDeEventos_Program.html", "cl": 0, "ucl": 76, "cal": 76, "tl": 112, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "SistemaDeEventos.Controllers.EventsController", "rp": "SistemaDeEventos_EventsController.html", "cl": 37, "ucl": 0, "cal": 37, "tl": 73, "cb": 6, "tb": 6, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "SistemaDeEventos.Controllers.LocationController", "rp": "SistemaDeEventos_LocationController.html", "cl": 24, "ucl": 13, "cal": 37, "tl": 79, "cb": 4, "tb": 8, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Controllers.OrderController", "rp": "SistemaDeEventos_OrderController.html", "cl": 0, "ucl": 17, "cal": 17, "tl": 43, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Controllers.RatingController", "rp": "SistemaDeEventos_RatingController.html", "cl": 0, "ucl": 21, "cal": 21, "tl": 46, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "SistemaDeEventos.Controllers.OrderController", "rp": "SistemaDeEventos_OrderController.html", "cl": 17, "ucl": 0, "cal": 17, "tl": 43, "cb": 2, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "SistemaDeEventos.Controllers.RatingController", "rp": "SistemaDeEventos_RatingController.html", "cl": 27, "ucl": 0, "cal": 27, "tl": 55, "cb": 7, "tb": 8, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "SistemaDeEventos.Controllers.TicketController", "rp": "SistemaDeEventos_TicketController.html", "cl": 40, "ucl": 0, "cal": 40, "tl": 76, "cb": 6, "tb": 6, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Controllers.UserController", "rp": "SistemaDeEventos_UserController.html", "cl": 0, "ucl": 24, "cal": 24, "tl": 52, "cb": 0, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.DTO.EventDTO", "rp": "SistemaDeEventos_EventDTO.html", "cl": 7, "ucl": 0, "cal": 7, "tl": 20, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.DTO.LocationDTO", "rp": "SistemaDeEventos_LocationDTO.html", "cl": 3, "ucl": 0, "cal": 3, "tl": 12, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.DTO.TicketDTO", "rp": "SistemaDeEventos_TicketDTO.html", "cl": 10, "ucl": 0, "cal": 10, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.DTOs.Order.OrderCreateRequestDTO", "rp": "SistemaDeEventos_OrderCreateRequestDTO.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 24, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.DTOs.Order.OrderListResponseDTO", "rp": "SistemaDeEventos_OrderListResponseDTO.html", "cl": 0, "ucl": 1, "cal": 1, "tl": 24, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.DTOs.Order.OrderResponseDTO", "rp": "SistemaDeEventos_OrderResponseDTO.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 24, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.DTOs.Rating.RatingCreateRequestDTO", "rp": "SistemaDeEventos_RatingCreateRequestDTO.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 20, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.DTOs.Rating.RatingResponseDTO", "rp": "SistemaDeEventos_RatingResponseDTO.html", "cl": 0, "ucl": 6, "cal": 6, "tl": 20, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.DTOs.User.UserCreateRequestDTO", "rp": "SistemaDeEventos_UserCreateRequestDTO.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.DTOs.User.UserResponseDTO", "rp": "SistemaDeEventos_UserResponseDTO.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.DTOs.User.UserUpdateRequestDTO", "rp": "SistemaDeEventos_UserUpdateRequestDTO.html", "cl": 0, "ucl": 3, "cal": 3, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Migrations.AddEventIdToTicket", "rp": "SistemaDeEventos_AddEventIdToTicket.html", "cl": 0, "ucl": 29, "cal": 29, "tl": 47, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Migrations.AddTicketAccessibility", "rp": "SistemaDeEventos_AddTicketAccessibility.html", "cl": 0, "ucl": 480, "cal": 480, "tl": 551, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Migrations.EventosContextModelSnapshot", "rp": "SistemaDeEventos_EventosContextModelSnapshot.html", "cl": 0, "ucl": 357, "cal": 357, "tl": 392, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Migrations.UpdateTicketModel", "rp": "SistemaDeEventos_UpdateTicketModel.html", "cl": 0, "ucl": 523, "cal": 523, "tl": 611, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Models.Event", "rp": "SistemaDeEventos_Event.html", "cl": 8, "ucl": 1, "cal": 9, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Models.EventosContext", "rp": "SistemaDeEventos_EventosContext.html", "cl": 171, "ucl": 3, "cal": 174, "tl": 202, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Models.Location", "rp": "SistemaDeEventos_Location.html", "cl": 4, "ucl": 0, "cal": 4, "tl": 15, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Models.Order", "rp": "SistemaDeEventos_Order.html", "cl": 0, "ucl": 9, "cal": 9, "tl": 25, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Models.PostgresContext", "rp": "SistemaDeEventos_PostgresContext.html", "cl": 0, "ucl": 11, "cal": 11, "tl": 30, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Models.Rating", "rp": "SistemaDeEventos_Rating.html", "cl": 0, "ucl": 8, "cal": 8, "tl": 19, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Models.Ticket", "rp": "SistemaDeEventos_Ticket.html", "cl": 10, "ucl": 3, "cal": 13, "tl": 32, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Models.User", "rp": "SistemaDeEventos_User.html", "cl": 0, "ucl": 10, "cal": 10, "tl": 27, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.OrderService", "rp": "SistemaDeEventos_OrderService.html", "cl": 0, "ucl": 38, "cal": 38, "tl": 64, "cb": 0, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.RatingService", "rp": "SistemaDeEventos_RatingService.html", "cl": 0, "ucl": 34, "cal": 34, "tl": 57, "cb": 0, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Repositories.EventsRepository", "rp": "SistemaDeEventos_EventsRepository.html", "cl": 0, "ucl": 51, "cal": 51, "tl": 87, "cb": 0, "tb": 18, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Repositories.LocationRepository", "rp": "SistemaDeEventos_LocationRepository.html", "cl": 0, "ucl": 28, "cal": 28, "tl": 51, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Repositories.OrderRepository", "rp": "SistemaDeEventos_OrderRepository.html", "cl": 0, "ucl": 22, "cal": 22, "tl": 44, "cb": 0, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Repositories.RatingRepository", "rp": "SistemaDeEventos_RatingRepository.html", "cl": 0, "ucl": 34, "cal": 34, "tl": 60, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Repositories.TicketRepository", "rp": "SistemaDeEventos_TicketRepository.html", "cl": 0, "ucl": 37, "cal": 37, "tl": 66, "cb": 0, "tb": 2, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Repositories.UserRepository", "rp": "SistemaDeEventos_UserRepository.html", "cl": 0, "ucl": 22, "cal": 22, "tl": 51, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Services.EventService", "rp": "SistemaDeEventos_EventService.html", "cl": 42, "ucl": 24, "cal": 66, "tl": 100, "cb": 1, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Services.LocationService", "rp": "SistemaDeEventos_LocationService.html", "cl": 34, "ucl": 13, "cal": 47, "tl": 77, "cb": 1, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.Services.TicketService", "rp": "SistemaDeEventos_TicketService.html", "cl": 64, "ucl": 15, "cal": 79, "tl": 115, "cb": 4, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "SistemaDeEventos.WeatherForecast", "rp": "SistemaDeEventos_WeatherForecast.html", "cl": 0, "ucl": 4, "cal": 4, "tl": 12, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "UserService", "rp": "SistemaDeEventos_UserService.html", "cl": 0, "ucl": 57, "cal": 57, "tl": 83, "cb": 0, "tb": 4, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "SistemaDeEventos.Controllers.UserController", "rp": "SistemaDeEventos_UserController.html", "cl": 50, "ucl": 0, "cal": 50, "tl": 97, "cb": 9, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
     ]},
 ];
 
@@ -264,29 +227,9 @@ var metrics = [{ "name": "Crap Score", "abbreviation": "crp", "explanationUrl": 
 var historicCoverageExecutionTimes = [];
 
 var riskHotspotMetrics = [
-      { "name": "Crap Score", "explanationUrl": "https://googletesting.blogspot.de/2011/02/this-code-is-crap.html" },
-      { "name": "Cyclomatic complexity", "explanationUrl": "https://en.wikipedia.org/wiki/Cyclomatic_complexity" },
 ];
 
 var riskHotspots = [
-  {
-    "assembly": "SistemaDeEventos", "class": "SistemaDeEventos.Repositories.EventsRepository", "reportPath": "SistemaDeEventos_EventsRepository.html", "methodName": "EscapeCsv(System.String)", "methodShortName": "EscapeCsv(...)", "fileIndex": 0, "line": 81,
-    "metrics": [
-      { "value": 72, "exceeded": true },
-      { "value": 8, "exceeded": false },
-    ]},
-  {
-    "assembly": "SistemaDeEventos", "class": "SistemaDeEventos.Repositories.EventsRepository", "reportPath": "SistemaDeEventos_EventsRepository.html", "methodName": "GetEventsReportCsvAsync()", "methodShortName": "GetEventsReportCsvAsync()", "fileIndex": 0, "line": 61,
-    "metrics": [
-      { "value": 72, "exceeded": true },
-      { "value": 8, "exceeded": false },
-    ]},
-  {
-    "assembly": "SistemaDeEventos", "class": "SistemaDeEventos.OrderService", "reportPath": "SistemaDeEventos_OrderService.html", "methodName": "GetOrderById()", "methodShortName": "GetOrderById()", "fileIndex": 0, "line": 51,
-    "metrics": [
-      { "value": 42, "exceeded": true },
-      { "value": 6, "exceeded": false },
-    ]},
 ];
 
 var branchCoverageAvailable = true;

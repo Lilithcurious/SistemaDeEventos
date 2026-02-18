@@ -13,5 +13,3 @@ namespace SistemaDeEventos.Interfaces;
 
         Task<OrderResponseDTO?> GetOrderById(Guid id);
     }
-
-

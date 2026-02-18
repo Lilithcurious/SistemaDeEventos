@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="XPlat Code Coverage">
+        <Configuration>
+          <Format>cobertura</Format>
+          <Include>[SistemaDeEventos]SistemaDeEventos.Controllers.*</Include>
+          <Include>[SistemaDeEventos]SistemaDeEventos.Services.*</Include>
+          <Include>[SistemaDeEventos]SistemaDeEventos.DTO.*</Include>
+          <Include>[SistemaDeEventos]SistemaDeEventos.Interfaces.*</Include>
+          <ExcludeByFile>**/Migrations/**/*.cs;**/Repositories/**/*.cs;**/Models/**/*.cs;**/*Context*.cs;**/Program.cs;**/WeatherForecast.cs;**/*.Designer.cs</ExcludeByFile>
+          <ExcludeByAttribute>^ExcludeFromCodeCoverageAttribute$</ExcludeByAttribute>
+        </Configuration>
+      </DataCollector>
+    </DataCollectors>
+  </DataCollectionRunSettings>
+</RunSettings>

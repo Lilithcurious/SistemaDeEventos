@@ -14,6 +14,8 @@ namespace SistemaDeEventos.DTOs.Order
         public Guid Id { get; set; }
         public Guid UserId { get; set; }
         public DateTime CreatedAt { get; set; }
+        public decimal TotalAmount { get; set; }
+        public string PaymentType { get; set; } = string.Empty;
     }
 
     public class OrderListResponseDTO

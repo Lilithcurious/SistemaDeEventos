@@ -12,35 +12,44 @@ namespace SistemaDeEventos.Controllers
 
         public RatingController(IRatingService ratingService)
         {
-            _ratingService = ratingService;
+            _ratingService = ratingService ?? throw new ArgumentNullException(nameof(ratingService));
         }
 
-       [HttpGet("event/{eventId}")]
+        [HttpGet("event/{eventId:guid}")]
         public async Task<ActionResult<List<RatingResponseDTO>>> GetRatingsByEvent(Guid eventId)
         {
-        var ratings = await _ratingService.GetRatingsByEvent(eventId);
+            var ratings = await _ratingService.GetRatingsByEvent(eventId);
 
-        if (ratings == null)
-        return NotFound();
+            if (ratings == null || !ratings.Any())
+                return NotFound();
 
-        return Ok(ratings);
+            return Ok(ratings);
         }
 
         [HttpPost]
         public async Task<ActionResult<RatingResponseDTO>> CreateRating(
-        RatingCreateRequestDTO request)
+            [FromBody] RatingCreateRequestDTO request)
         {
-        var rating = await _ratingService.CreateRating(
-        request.UserId,
-        request.EventId,
-        request.Score,
-        request.Comment);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
-        return CreatedAtAction(
-        nameof(GetRatingsByEvent),
-        new { eventId = rating.EventId },
-        rating);
+            try
+            {
+                var rating = await _ratingService.CreateRating(
+                    request.UserId,
+                    request.EventId,
+                    request.Score,
+                    request.Comment);
+
+                return CreatedAtAction(
+                    nameof(GetRatingsByEvent),
+                    new { eventId = request.EventId },
+                    rating);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
-
