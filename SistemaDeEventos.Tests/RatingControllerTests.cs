@@ -103,7 +103,7 @@ namespace SistemaDeEventos.Tests.Controllers
         }
 
         [Test]
-        public void CreateRating_ServiceThrowsException_ShouldPropagate()
+        public async Task CreateRating_ServiceThrowsArgumentException_ReturnsBadRequest()
         {
             var request = new RatingCreateRequestDTO
             {
@@ -121,8 +121,12 @@ namespace SistemaDeEventos.Tests.Controllers
                     It.IsAny<string>()))
                 .ThrowsAsync(new ArgumentException("A nota deve estar entre 1 e 5."));
 
-            Assert.ThrowsAsync<ArgumentException>(async () =>
-                await _controller.CreateRating(request));
+            var result = await _controller.CreateRating(request);
+
+            Assert.That(result.Result, Is.InstanceOf<BadRequestObjectResult>());
+
+            var badRequestResult = (BadRequestObjectResult)result.Result!;
+            Assert.That(badRequestResult.Value, Is.EqualTo("A nota deve estar entre 1 e 5."));
         }
     }
 }

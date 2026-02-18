@@ -4,6 +4,7 @@ using SistemaDeEventos.Interfaces;
 using SistemaDeEventos.Models;
 using SistemaDeEventos.DTOs.User;
 
+[TestFixture]
 public class UserServiceTests
 {
     private Mock<IUserRepository> _mockRepository;
@@ -16,12 +17,14 @@ public class UserServiceTests
         _userService = new UserService(_mockRepository.Object);
     }
 
+    //para cenário de sucesso
+
     [Test]
     public async Task CreateUser_DeveCriarUsuario_ComDadosValidos()
     {
         string name = "Luciana";
         string email = "lu@email.com";
-        string password = "123";
+        string password = "123456";
 
         var result = await _userService.CreateUser(name, email, password);
 
@@ -38,6 +41,30 @@ public class UserServiceTests
             Times.Once);
     }
 
+    //para cenário de falhas
+
+    [Test]
+    public void CreateUser_DeveLancarArgumentException_QuandoNomeVazio()
+    {
+        Assert.ThrowsAsync<ArgumentException>(async () =>
+            await _userService.CreateUser("", "email@email.com", "123456"));
+    }
+
+    [Test]
+    public void CreateUser_DeveLancarArgumentException_QuandoEmailInvalido()
+    {
+        Assert.ThrowsAsync<ArgumentException>(async () =>
+            await _userService.CreateUser("Luciana", "emailinvalido", "123456"));
+    }
+
+    [Test]
+    public void CreateUser_DeveLancarArgumentException_QuandoSenhaCurta()
+    {
+        Assert.ThrowsAsync<ArgumentException>(async () =>
+            await _userService.CreateUser("Luciana", "email@email.com", "123"));
+    }
+
+    //para cenário de sucesso
 
     [Test]
     public async Task GetAllUsers_DeveRetornarListaMapeada()
@@ -59,10 +86,11 @@ public class UserServiceTests
         Assert.That(result[1].Email, Is.EqualTo("b@email.com"));
     }
 
+    //para cenário de sucesso no user id 
+
     [Test]
     public async Task GetUserById_DeveRetornarUsuario_QuandoExiste()
     {
-
         var id = Guid.NewGuid();
 
         var user = new User
@@ -82,8 +110,17 @@ public class UserServiceTests
         Assert.That(result.Name, Is.EqualTo("Luciana"));
     }
 
+    //para cenário de falhas no user id 
+
     [Test]
-    public void GetUserById_DeveLancarExcecao_QuandoNaoExiste()
+    public void GetUserById_DeveLancarArgumentException_QuandoIdVazio()
+    {
+        Assert.ThrowsAsync<ArgumentException>(async () =>
+            await _userService.GetUserById(Guid.Empty));
+    }
+
+    [Test]
+    public void GetUserById_DeveLancarKeyNotFoundException_QuandoNaoExiste()
     {
         var id = Guid.NewGuid();
 
@@ -91,11 +128,11 @@ public class UserServiceTests
             .Setup(r => r.GetUserById(id))
             .ReturnsAsync((User?)null);
 
-        var ex = Assert.ThrowsAsync<Exception>(async () =>
+        Assert.ThrowsAsync<KeyNotFoundException>(async () =>
             await _userService.GetUserById(id));
-
-        Assert.That(ex!.Message, Is.EqualTo("User not found"));
     }
+
+    //para cenário de sucesso
 
     [Test]
     public async Task UpdateUser_DeveAtualizarDados_QuandoUsuarioExiste()
@@ -116,7 +153,7 @@ public class UserServiceTests
 
         string newName = "New";
         string newEmail = "new@email.com";
-        string newPassword = "newpass";
+        string newPassword = "newpass123";
 
         var result = await _userService.UpdateUser(id, newName, newEmail, newPassword);
 
@@ -132,8 +169,17 @@ public class UserServiceTests
             Times.Once);
     }
 
+    //para cenário de falhas
+
     [Test]
-    public void UpdateUser_DeveLancarExcecao_QuandoUsuarioNaoExiste()
+    public void UpdateUser_DeveLancarArgumentException_QuandoIdVazio()
+    {
+        Assert.ThrowsAsync<ArgumentException>(async () =>
+            await _userService.UpdateUser(Guid.Empty, "Nome", "email@email.com", "123456"));
+    }
+
+    [Test]
+    public void UpdateUser_DeveLancarKeyNotFoundException_QuandoUsuarioNaoExiste()
     {
         var id = Guid.NewGuid();
 
@@ -141,9 +187,49 @@ public class UserServiceTests
             .Setup(r => r.GetUserById(id))
             .ReturnsAsync((User?)null);
 
-        var ex = Assert.ThrowsAsync<Exception>(async () =>
-            await _userService.UpdateUser(id, "X", "x@email.com", "123"));
+        Assert.ThrowsAsync<KeyNotFoundException>(async () =>
+            await _userService.UpdateUser(id, "Nome", "email@email.com", "123456"));
+    }
 
-        Assert.That(ex!.Message, Is.EqualTo("User not found"));
+    //para cenário de sucesso
+
+    [Test]
+    public async Task DeleteUser_DeveRetornarTrue_QuandoUsuarioExiste()
+    {
+        var id = Guid.NewGuid();
+        var user = new User { Id = id };
+
+        _mockRepository
+            .Setup(r => r.GetUserById(id))
+            .ReturnsAsync(user);
+
+        var result = await _userService.DeleteUser(id);
+
+        Assert.That(result, Is.True);
+
+        _mockRepository.Verify(r => r.DeleteUser(user), Times.Once);
+    }
+
+    //para cenário de falhas
+
+    [Test]
+    public void DeleteUser_DeveLancarArgumentException_QuandoIdVazio()
+    {
+        Assert.ThrowsAsync<ArgumentException>(async () =>
+            await _userService.DeleteUser(Guid.Empty));
+    }
+
+    [Test]
+    public async Task DeleteUser_DeveRetornarFalse_QuandoUsuarioNaoExiste()
+    {
+        var id = Guid.NewGuid();
+
+        _mockRepository
+            .Setup(r => r.GetUserById(id))
+            .ReturnsAsync((User?)null);
+
+        var result = await _userService.DeleteUser(id);
+
+        Assert.That(result, Is.False);
     }
 }

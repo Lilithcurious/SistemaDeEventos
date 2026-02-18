@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SistemaDeEventos.DTOs.User;
 using SistemaDeEventos.Interfaces;
-using SistemaDeEventos.Models;
 
 namespace SistemaDeEventos.Controllers
 {
@@ -22,25 +21,41 @@ namespace SistemaDeEventos.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var user = await _userService.CreateUser(request.Name, request.Email, request.Password);
-            
-            return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
+            try
+            {
+                var user = await _userService.CreateUser(request.Name, request.Email, request.Password);
+
+                return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet]
         public async Task<ActionResult<List<UserResponseDTO>>> GetAllUsers()
         {
             var users = await _userService.GetAllUsers();
-            
             return Ok(users ?? new List<UserResponseDTO>());
         }
 
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<UserResponseDTO>> GetUserById(Guid id)
         {
-            var user = await _userService.GetUserById(id);
-            
-            return user == null ? NotFound() : Ok(user);
+            try
+            {
+                var user = await _userService.GetUserById(id);
+                return Ok(user);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpPut("{id:guid}")]
@@ -49,19 +64,36 @@ namespace SistemaDeEventos.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var updatedUser = await _userService.UpdateUser(id, request.Name, request.Email, request.Password);
-            
-            return updatedUser == null ? NotFound() : Ok(updatedUser);
+            try
+            {
+                var updatedUser = await _userService.UpdateUser(id, request.Name, request.Email, request.Password);
+                return Ok(updatedUser);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteUser(Guid id)
         {
-            var result = await _userService.DeleteUser(id);
-            
-            return result ? NoContent() : NotFound();
+            try
+            {
+                var result = await _userService.DeleteUser(id);
+                return result ? NoContent() : NotFound();
+            }
+            catch (KeyNotFoundException)
+            {
+                return NotFound();
+            }
         }
     }
 }
+
 
 

@@ -7,6 +7,7 @@ using SistemaDeEventos.DTOs.Rating;
 
 namespace SistemaDeEventos.Tests;
 
+[TestFixture]
 public class RatingServiceTests
 {
     private Mock<IRatingRepository> _mockRepository;
@@ -18,6 +19,8 @@ public class RatingServiceTests
         _mockRepository = new Mock<IRatingRepository>();
         _ratingService = new RatingService(_mockRepository.Object);
     }
+
+    //create - sucessos
 
     [Test]
     public async Task CreateRating_DeveCriarRating_ComSucesso()
@@ -41,21 +44,64 @@ public class RatingServiceTests
                 x.Comment == comment
             )), Times.Once);
     }
+    //create - falhas
 
     [Test]
-    public void CreateRating_DeveLancarExcecao_SeScoreInvalido()
+    public void CreateRating_DeveLancarArgumentException_SeScoreMenorQue1()
     {
-        var userId = Guid.NewGuid();
-        var eventId = Guid.NewGuid();
-        var score = 10; // inválido
-        var comment = "Teste";
-
-        var ex = Assert.ThrowsAsync<ArgumentException>(async () =>
-            await _ratingService
-                .CreateRating(userId, eventId, score, comment));
-
-        Assert.That(ex!.Message, Is.EqualTo("A nota deve estar entre 1 e 5."));
+        Assert.ThrowsAsync<ArgumentException>(async () =>
+            await _ratingService.CreateRating(
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                0,
+                "Teste"));
     }
+
+    [Test]
+    public void CreateRating_DeveLancarArgumentException_SeScoreMaiorQue5()
+    {
+        Assert.ThrowsAsync<ArgumentException>(async () =>
+            await _ratingService.CreateRating(
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                6,
+                "Teste"));
+    }
+
+    [Test]
+    public void CreateRating_DeveLancarArgumentException_SeUserIdInvalido()
+    {
+        Assert.ThrowsAsync<ArgumentException>(async () =>
+            await _ratingService.CreateRating(
+                Guid.Empty,
+                Guid.NewGuid(),
+                5,
+                "Teste"));
+    }
+
+    [Test]
+    public void CreateRating_DeveLancarArgumentException_SeEventIdInvalido()
+    {
+        Assert.ThrowsAsync<ArgumentException>(async () =>
+            await _ratingService.CreateRating(
+                Guid.NewGuid(),
+                Guid.Empty,
+                5,
+                "Teste"));
+    }
+
+    [Test]
+    public void CreateRating_DeveLancarArgumentException_SeCommentVazio()
+    {
+        Assert.ThrowsAsync<ArgumentException>(async () =>
+            await _ratingService.CreateRating(
+                Guid.NewGuid(),
+                Guid.NewGuid(),
+                5,
+                ""));
+    }
+
+    //evento sucessos
 
     [Test]
     public async Task GetRatingsByEvent_DeveRetornarLista()
@@ -90,4 +136,14 @@ public class RatingServiceTests
         Assert.That(result[0].Score, Is.EqualTo(4));
         Assert.That(result[1].Score, Is.EqualTo(5));
     }
+
+    //evento falhas
+
+    [Test]
+    public void GetRatingsByEvent_DeveLancarArgumentException_SeEventIdInvalido()
+    {
+        Assert.ThrowsAsync<ArgumentException>(async () =>
+            await _ratingService.GetRatingsByEvent(Guid.Empty));
+    }
 }
+
