@@ -1,0 +1,180 @@
+[1mdiff --git a/.gitignore b/.gitignore[m
+[1mindex 8dca54e..deebb57 100644[m
+[1m--- a/.gitignore[m
+[1m+++ b/.gitignore[m
+[36m@@ -529,3 +529,8 @@[m [mcoveragereport/SistemaDeEventos_UserResponseDTO.html[m
+ coveragereport/SistemaDeEventos_UserService.html[m
+ coveragereport/SistemaDeEventos_UserUpdateRequestDTO.html[m
+ coveragereport/SistemaDeEventos_WeatherForecast.html[m
+[32m+[m[32m# Coverage / test artifacts[m
+[32m+[m[32mCoverageReport/[m
+[32m+[m[32mcoveragereport/[m
+[32m+[m[32m**/TestResults/[m
+[32m+[m[32m**/coverage.cobertura.xml[m
+[1mdiff --git a/Controllers/UserController.cs b/Controllers/UserController.cs[m
+[1mindex e1fa918..11381b4 100644[m
+[1m--- a/Controllers/UserController.cs[m
+[1m+++ b/Controllers/UserController.cs[m
+[36m@@ -23,7 +23,7 @@[m [mnamespace SistemaDeEventos.Controllers[m
+ [m
+             try[m
+             {[m
+[31m-                var user = await _userService.CreateUser(request.Name, request.Email, request.Password);[m
+[32m+[m[32m                var user = await _userService.CreateUser(request.Name, request.Email, request.Password, request.Phone, request.BirthDate, request.IsActive);[m
+ [m
+                 return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);[m
+             }[m
+[36m@@ -66,7 +66,7 @@[m [mnamespace SistemaDeEventos.Controllers[m
+ [m
+             try[m
+             {[m
+[31m-                var updatedUser = await _userService.UpdateUser(id, request.Name, request.Email, request.Password);[m
+[32m+[m[32m                var updatedUser = await _userService.UpdateUser(id, request.Name, request.Email, request.Password, request.Phone, request.BirthDate, request.IsActive);[m
+                 return Ok(updatedUser);[m
+             }[m
+             catch (ArgumentException ex)[m
+[1mdiff --git a/DTO/UserDTO.cs b/DTO/UserDTO.cs[m
+[1mindex 54648c6..1c178cb 100644[m
+[1m--- a/DTO/UserDTO.cs[m
+[1m+++ b/DTO/UserDTO.cs[m
+[36m@@ -1,10 +1,13 @@[m
+ namespace SistemaDeEventos.DTOs.User[m
+ {[m
+[31m-public class UserCreateRequestDTO[m
+[32m+[m[32m    public class UserCreateRequestDTO[m
+     {[m
+         public string Name { get; set; } = string.Empty;[m
+         public string Email { get; set; } = string.Empty;[m
+         public string Password { get; set; } = string.Empty;[m
+[32m+[m[32m        public string? Phone { get; set; }[m
+[32m+[m[32m        public DateOnly? BirthDate { get; set; }[m
+[32m+[m[32m        public bool? IsActive { get; set; }[m
+     }[m
+ [m
+     public class UserUpdateRequestDTO[m
+[36m@@ -12,14 +15,18 @@[m [mpublic class UserCreateRequestDTO[m
+         public string Name { get; set; } = string.Empty;[m
+         public string Email { get; set; } = string.Empty;[m
+         public string Password { get; set; } = string.Empty;[m
+[32m+[m[32m        public string? Phone { get; set; }[m
+[32m+[m[32m        public DateOnly? BirthDate { get; set; }[m
+[32m+[m[32m        public bool? IsActive { get; set; }[m
+     }[m
+ [m
+[31m-public class UserResponseDTO[m
+[31m-{[m
+[31m-    public Guid Id { get; set; }[m
+[31m-    public required string Name { get; set; }[m
+[31m-    public required string Email { get; set; }[m
+[31m-    public DateTime CreatedAt { get; set; }[m
+[31m-[m
+[32m+[m[32m    public class UserResponseDTO[m
+[32m+[m[32m    {[m
+[32m+[m[32m        public Guid Id { get; set; }[m
+[32m+[m[32m        public required string Name { get; set; }[m
+[32m+[m[32m        public required string Email { get; set; }[m
+[32m+[m[32m        public string? Phone { get; set; }[m
+[32m+[m[32m        public DateOnly? BirthDate { get; set; }[m
+[32m+[m[32m        public bool? IsActive { get; set; }[m
+[32m+[m[32m    }[m
+ }[m
+[31m-}[m
+\ No newline at end of file[m
+[1mdiff --git a/Interfaces/IUserService.cs b/Interfaces/IUserService.cs[m
+[1mindex ed9a39c..618706a 100644[m
+[1m--- a/Interfaces/IUserService.cs[m
+[1m+++ b/Interfaces/IUserService.cs[m
+[36m@@ -1,14 +1,12 @@[m
+ namespace SistemaDeEventos.Interfaces;[m
+ [m
+ using SistemaDeEventos.DTOs.User;[m
+[31m-using SistemaDeEventos.Models;[m
+ [m
+ public interface IUserService[m
+ {[m
+     Task<List<UserResponseDTO>> GetAllUsers();[m
+     Task<UserResponseDTO> GetUserById(Guid id);[m
+[31m-    Task<UserResponseDTO> UpdateUser(Guid id, string name, string email, string password);[m
+[31m-    Task<UserResponseDTO> CreateUser(string name, string email, string password);[m
+[32m+[m[32m    Task<UserResponseDTO> UpdateUser(Guid id, string name, string email, string password, string? phone, DateOnly? birthDate, bool? isActive);[m
+[32m+[m[32m    Task<UserResponseDTO> CreateUser(string name, string email, string password, string? phone, DateOnly? birthDate, bool? isActive);[m
+     Task<bool> DeleteUser(Guid id);[m
+ }[m
+[31m-[m
+[1mdiff --git a/Services/UserService.cs b/Services/UserService.cs[m
+[1mindex fa3bf7b..0232469 100644[m
+[1m--- a/Services/UserService.cs[m
+[1m+++ b/Services/UserService.cs[m
+[36m@@ -11,36 +11,24 @@[m [mpublic class UserService : IUserService[m
+         _userRepository = userRepository ?? throw new ArgumentNullException(nameof(userRepository));[m
+     }[m
+ [m
+[31m-    public async Task<UserResponseDTO> CreateUser(string name, string email, string password)[m
+[32m+[m[32m    public async Task<UserResponseDTO> CreateUser(string name, string email, string password, string? phone, DateOnly? birthDate, bool? isActive)[m
+     {[m
+[31m-        if (string.IsNullOrWhiteSpace(name))[m
+[31m-            throw new ArgumentException("Name is required");[m
+[31m-[m
+[31m-        if (string.IsNullOrWhiteSpace(email))[m
+[31m-            throw new ArgumentException("Email is required");[m
+[31m-[m
+[31m-        if (!email.Contains("@"))[m
+[31m-            throw new ArgumentException("Invalid email format");[m
+[31m-[m
+[31m-        if (string.IsNullOrWhiteSpace(password) || password.Length < 6)[m
+[31m-            throw new ArgumentException("Password must be at least 6 characters long");[m
+[32m+[m[32m        ValidateUserFields(name, email, password, birthDate);[m
+ [m
+         var user = new User[m
+         {[m
+             Id = Guid.NewGuid(),[m
+             Name = name,[m
+             Email = email,[m
+[31m-            Password = password[m
+[32m+[m[32m            Password = BCrypt.Net.BCrypt.HashPassword(password),[m
+[32m+[m[32m            Phone = phone,[m
+[32m+[m[32m            BirthDate = birthDate,[m
+[32m+[m[32m            IsActive = isActive ?? true[m
+         };[m
+ [m
+         await _userRepository.AddUser(user);[m
+ [m
+[31m-        return new UserResponseDTO[m
+[31m-        {[m
+[31m-            Id = user.Id,[m
+[31m-            Name = user.Name,[m
+[31m-            Email = user.Email[m
+[31m-        };[m
+[32m+[m[32m        return MapToResponse(user);[m
+     }[m
+ [m
+     public async Task<bool> DeleteUser(Guid id)[m
+[36m@@ -60,12 +48,7 @@[m [mpublic class UserService : IUserService[m
+     {[m
+         var users = await _userRepository.GetAllUsers();[m
+ [m
+[31m-        return users.Select(user => new UserResponseDTO[m
+[31m-        {[m
+[31m-            Id = user.Id,[m
+[31m-            Name = user.Name,[m
+[31m-            Email = user.Email[m
+[31m-        }).ToList();[m
+[32m+[m[32m        return users.Select(MapToResponse).ToList();[m
+     }[m
+ [m
+     public async Task<UserResponseDTO> GetUserById(Guid id)[m
+[36m@@ -78,15 +61,10 @@[m [mpublic class UserService : IUserService[m
+         if (user == null)[m
+             throw new KeyNotFoundException("User not found");[m
+ [m
+[31m-        return new UserResponseDTO[m
+[31m-        {[m
+[31m-            Id = user.Id,[m
+[31m-            Name = user.Name,[m
+[31m-            Email = user.Email[m
+[31m-        };[m
+[32m+[m[32m        return MapToResponse(user);[m
+     }[m
+ [m
+[31m-    public async Task<UserResponseDTO> UpdateUser(Guid id, string name, string email, string password)[m
+[32m+[m[32m    public async Task<UserResponseDTO> UpdateUser(Guid id, string name, string email, string passwo

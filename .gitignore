@@ -529,3 +529,8 @@ coveragereport/SistemaDeEventos_UserResponseDTO.html
 coveragereport/SistemaDeEventos_UserService.html
 coveragereport/SistemaDeEventos_UserUpdateRequestDTO.html
 coveragereport/SistemaDeEventos_WeatherForecast.html
+# Coverage / test artifacts
+CoverageReport/
+coveragereport/
+**/TestResults/
+**/coverage.cobertura.xml

@@ -23,7 +23,7 @@ namespace SistemaDeEventos.Controllers
 
             try
             {
-                var user = await _userService.CreateUser(request.Name, request.Email, request.Password);
+                var user = await _userService.CreateUser(request.Name, request.Email, request.Password, request.Phone, request.BirthDate, request.IsActive);
 
                 return CreatedAtAction(nameof(GetUserById), new { id = user.Id }, user);
             }
@@ -66,7 +66,7 @@ namespace SistemaDeEventos.Controllers
 
             try
             {
-                var updatedUser = await _userService.UpdateUser(id, request.Name, request.Email, request.Password);
+                var updatedUser = await _userService.UpdateUser(id, request.Name, request.Email, request.Password, request.Phone, request.BirthDate, request.IsActive);
                 return Ok(updatedUser);
             }
             catch (ArgumentException ex)

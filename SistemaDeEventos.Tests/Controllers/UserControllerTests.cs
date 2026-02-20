@@ -15,7 +15,10 @@ public class UserControllerTests
         {
             Name = "Maria",
             Email = "maria@email.com",
-            Password = "123456"
+            Password = "123456",
+            Phone = "(11) 98765-4321",
+            BirthDate = new DateOnly(1995, 3, 15),
+            IsActive = true
         };
 
     private static UserUpdateRequestDTO CreateUpdateRequest()
@@ -23,7 +26,10 @@ public class UserControllerTests
         {
             Name = "Maria Update",
             Email = "maria2@email.com",
-            Password = "abcdef"
+            Password = "abcdef",
+            Phone = "(11) 99999-0000",
+            BirthDate = new DateOnly(1990, 7, 22),
+            IsActive = true
         };
 
     private static UserResponseDTO CreateResponse(Guid? id = null)
@@ -31,7 +37,10 @@ public class UserControllerTests
         {
             Id = id ?? Guid.NewGuid(),
             Name = "Maria",
-            Email = "maria@email.com"
+            Email = "maria@email.com",
+            Phone = "(11) 98765-4321",
+            BirthDate = new DateOnly(1995, 3, 15),
+            IsActive = true
         };
 
     [Test]
@@ -45,7 +54,7 @@ public class UserControllerTests
         var result = await controller.CreateUser(CreateCreateRequest());
 
         Assert.That(result.Result, Is.TypeOf<BadRequestObjectResult>());
-        service.Verify(s => s.CreateUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+        service.Verify(s => s.CreateUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string?>(), It.IsAny<DateOnly?>(), It.IsAny<bool?>()), Times.Never);
     }
 
     [Test]
@@ -54,7 +63,7 @@ public class UserControllerTests
         var created = CreateResponse(Guid.NewGuid());
         var service = new Mock<IUserService>();
 
-        service.Setup(s => s.CreateUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+        service.Setup(s => s.CreateUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string?>(), It.IsAny<DateOnly?>(), It.IsAny<bool?>()))
                .ReturnsAsync(created);
 
         var controller = new UserController(service.Object);
@@ -69,7 +78,7 @@ public class UserControllerTests
         Assert.That(dto, Is.Not.Null);
         Assert.That(dto!.Id, Is.EqualTo(created.Id));
 
-        service.Verify(s => s.CreateUser("Maria", "maria@email.com", "123456"), Times.Once);
+        service.Verify(s => s.CreateUser("Maria", "maria@email.com", "123456", "(11) 98765-4321", new DateOnly(1995, 3, 15), true), Times.Once);
     }
 
     [Test]
@@ -77,7 +86,7 @@ public class UserControllerTests
     {
         var service = new Mock<IUserService>();
 
-        service.Setup(s => s.CreateUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+        service.Setup(s => s.CreateUser(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string?>(), It.IsAny<DateOnly?>(), It.IsAny<bool?>()))
                .ThrowsAsync(new ArgumentException("Email inválido"));
 
         var controller = new UserController(service.Object);
@@ -193,7 +202,7 @@ public class UserControllerTests
         var result = await controller.UpdateUser(Guid.NewGuid(), CreateUpdateRequest());
 
         Assert.That(result.Result, Is.TypeOf<BadRequestObjectResult>());
-        service.Verify(s => s.UpdateUser(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
+        service.Verify(s => s.UpdateUser(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string?>(), It.IsAny<DateOnly?>(), It.IsAny<bool?>()), Times.Never);
     }
 
     [Test]
@@ -203,7 +212,7 @@ public class UserControllerTests
         var updated = CreateResponse(id);
 
         var service = new Mock<IUserService>();
-        service.Setup(s => s.UpdateUser(id, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+        service.Setup(s => s.UpdateUser(id, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string?>(), It.IsAny<DateOnly?>(), It.IsAny<bool?>()))
                .ReturnsAsync(updated);
 
         var controller = new UserController(service.Object);
@@ -224,7 +233,7 @@ public class UserControllerTests
         var id = Guid.NewGuid();
         var service = new Mock<IUserService>();
 
-        service.Setup(s => s.UpdateUser(id, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+        service.Setup(s => s.UpdateUser(id, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string?>(), It.IsAny<DateOnly?>(), It.IsAny<bool?>()))
                .ThrowsAsync(new ArgumentException("Email inválido"));
 
         var controller = new UserController(service.Object);
@@ -240,7 +249,7 @@ public class UserControllerTests
         var id = Guid.NewGuid();
         var service = new Mock<IUserService>();
 
-        service.Setup(s => s.UpdateUser(id, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+        service.Setup(s => s.UpdateUser(id, It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string?>(), It.IsAny<DateOnly?>(), It.IsAny<bool?>()))
                .ThrowsAsync(new KeyNotFoundException());
 
         var controller = new UserController(service.Object);
